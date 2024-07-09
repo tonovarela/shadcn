@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input"
 
 import { CopyIcon } from "@radix-ui/react-icons"
 
-export default function Page() {
+export  function Page() {
     const [openDialog, setOpenDialog] = useState(false)
     const refText = useRef<any>();
     const copyTextEvent = async () => {
