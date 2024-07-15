@@ -1,9 +1,8 @@
 // https://tailwindcomponents.com/component/tailwind-css-admin-dashboard-layout
 // https://gist.github.com/Klerith/3949f1c8b884d7101e378dfb668f0f3a
-
+'use client'
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
-
 const links = [
     { name: "accordion", href: "accordion" },
     { name: "alert", href: "alert" },
@@ -22,7 +21,7 @@ const links = [
     { name: "slider", href: "slider" },
     { name: "sonner", href: "sonner" },
     { name: "toast", href: "toast" },
-    { name: "tabs", href: "tabs" },
+    { name: "Data table", href: "data-table" },
 ].sort((a, b) => a.name.localeCompare(b.name));
 
 export default function DashboardLayout({
@@ -38,6 +37,10 @@ export default function DashboardLayout({
                         <div className="flex items-center justify-start">
                             <button
                                 id="toggleSidebarMobile"
+                                onClick={() => {
+                                    console.log("toggleSidebarMobile")
+                                }}
+
                                 aria-expanded="true"
                                 aria-controls="sidebar"
                                 className="lg:hidden mr-2 text-gray-600 hover:text-gray-900 cursor-pointer p-2 hover:bg-gray-100 focus:bg-gray-100 focus:ring-2 focus:ring-gray-100 rounded"
