@@ -4,7 +4,8 @@ import { Badge } from "@/components/ui/badge"
 import { Payment } from "@/data/payments.data"
 import {  ColumnDef, HeaderContext, SortDirection } from "@tanstack/react-table"
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -39,14 +40,39 @@ const HeaderSortedTemplate = ({ header, headerName }: {header:HeaderContext<Paym
 }
 export const columns: ColumnDef<Payment>[] = [
   {
-    accessorKey: "clientName",
+    id: "select",
+    header: ({ table }) => (
+      <Checkbox
+        checked={
+          table.getIsAllPageRowsSelected() ||
+          (table.getIsSomePageRowsSelected() && "indeterminate")
+        }
+        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        aria-label="Select all"
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        aria-label="Select row"
+      />
+    ),
+    enableSorting: false,
+    enableHiding: false,
+  },
+  {
+    accessorKey: "clientName",    
     size:50,
     minSize: 100,
     maxSize:150,
     enableResizing:true,
-    header: (header) => {
-      return (        
+    enableHiding:false,
+    header: (header) => {      
+      return (
+        <div className="flex justify-start"  >                  
          <HeaderSortedTemplate header={header} headerName="Client Name" />
+         </div>
       )
     },
   },
@@ -66,7 +92,9 @@ export const columns: ColumnDef<Payment>[] = [
         failed: 'destructive',
       }[status] ?? ("default" as any);
 
-      return <Badge className="capitalize w-[80%]  " variant={variant}>{status}</Badge>
+      return <Badge className="uppercase w-32 "  variant={variant}>
+        <div className="w-full text-center tracking-widest">{status}</div>
+      </Badge>
 
     }
   },
@@ -91,15 +119,18 @@ export const columns: ColumnDef<Payment>[] = [
         style: "currency",
         currency: "MXN",
       }).format(amount)
-      return <div className="text-right font-medium">{formatted}</div>
+      return <div className="font-medium">{formatted}</div>
     },
   },
   {
     id: "actions",
+    enableHiding:false,
+    
     cell: ({ row }) => {
       const payment = row.original
 
       return (
+      
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="h-8 w-8 p-0">
