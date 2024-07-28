@@ -2,7 +2,7 @@
 
 import { Badge } from "@/components/ui/badge"
 import { Payment } from "@/data/payments.data"
-import {  ColumnDef, HeaderContext, SortDirection } from "@tanstack/react-table"
+import {  ColumnDef, FilterFn, HeaderContext, Row, SortDirection } from "@tanstack/react-table"
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox"
@@ -16,6 +16,15 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { ChevronDownIcon, ChevronUpIcon, DotsHorizontalIcon } from "@radix-ui/react-icons"
 import { toast } from "sonner"
+
+const myCustomFilterFn: FilterFn<Payment> = (row: Row<Payment>, columnId: string, filterValue: string, addMeta: (meta: any) => void) => {
+
+   const filterParts = filterValue.split(" ");
+   const rowValues = `${row.original.email} ${row.original.clientName} ${row.original.status}`.toLowerCase();
+   return filterParts.every((part) => rowValues.includes(part));
+
+}
+
 
 const SortedIcon = ({ isSorted }: { isSorted: false | SortDirection }) => {
   if (isSorted === "asc") {
@@ -100,6 +109,7 @@ export const columns: ColumnDef<Payment>[] = [
   },
   {
     accessorKey: "email",
+    filterFn: myCustomFilterFn,
     header: (header) => {
       return (
       <HeaderSortedTemplate header={header} headerName="Email"/>

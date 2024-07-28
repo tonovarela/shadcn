@@ -119,7 +119,7 @@ export function DataTable<TData, TValue>({
       </div>
       <div className="flex items-center justify-between py-4">
         <Input
-          placeholder="Filter emails..."
+          placeholder="Filter anything...(client name, email, status)"
           value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
           onChange={(event) => {
             setCurrentStatus('all');
@@ -234,6 +234,24 @@ export function DataTable<TData, TValue>({
           </Button>
         </div>
 
+        <Select onValueChange={(value)=>{
+          table.setPageSize(Number(value))
+        }} >
+          <SelectTrigger className='w-[180px] m-5'>
+            <SelectValue placeholder="10 rows"></SelectValue>          
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectLabel>Rows per page</SelectLabel>
+              <SelectItem value="10">10</SelectItem>
+              <SelectItem value="15">15</SelectItem>
+
+              <SelectItem value="25">25</SelectItem>
+              <SelectItem value="50">50</SelectItem>
+              <SelectItem value="100">100</SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
 
       </div>
       <div className="flex-1 text-sm text-muted-foreground">
