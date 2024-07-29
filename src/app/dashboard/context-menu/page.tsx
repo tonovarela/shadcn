@@ -8,7 +8,7 @@ export default function Page() {
             <ContextMenu>
                 <ContextMenuTrigger className="flex 
                 h-[150px] w-full items-center justify-center rounded-md border border-dashed text-sm
-                background-clip-padding bg-gray-100 text-gray-500 hover:bg-gray-200 hover:text-gray-600 cursor-pointer            
+                background-clip-padding bg-gray-100 dark:bg-slate-900 dark:text-white text-gray-500 hover:bg-gray-200 hover:text-gray-600 cursor-pointer            
                 ">
                     Right click here
                 </ContextMenuTrigger>
